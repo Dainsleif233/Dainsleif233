@@ -1,14 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="460" height="192" viewBox="0 0 460 192">
-<rect width="460" height="192" rx="6" fill="#1a1b27" stroke="#292e42"/>
-<text x="20" y="32" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="16" font-weight="700" fill="#7aa2f7">Dainsleif233 on GitHub</text>
-<text x="20" y="64" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" fill="#9aa5ce">Total Stars</text>
-<text x="440" y="64" text-anchor="end" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#e0af68">30</text>
-<text x="20" y="88" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" fill="#9aa5ce">Total Repos</text>
-<text x="440" y="88" text-anchor="end" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#7aa2f7">69</text>
-<text x="20" y="112" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" fill="#9aa5ce">Total Forks</text>
-<text x="440" y="112" text-anchor="end" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#9ece6a">5</text>
-<text x="20" y="136" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" fill="#9aa5ce">Followers</text>
-<text x="440" y="136" text-anchor="end" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#bb9af7">2</text>
-<text x="20" y="160" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" fill="#9aa5ce">Following</text>
-<text x="440" y="160" text-anchor="end" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#7dcfff">5</text>
+<style>:root{--bg:#ffffff;--border:#d0d7de;--title:#0969da;--text:#57606a;--muted:#6e7781;--star:#bf8700;--c-stars:#bf8700;--c-repos:#0969da;--c-forks:#1a7f37;--c-followers:#8250df;--c-following:#0a3069;}@media (prefers-color-scheme: dark){:root{--bg:#1a1b27;--border:#292e42;--title:#7aa2f7;--text:#9aa5ce;--muted:#565f89;--star:#e0af68;--c-stars:#e0af68;--c-repos:#7aa2f7;--c-forks:#9ece6a;--c-followers:#bb9af7;--c-following:#7dcfff;}}.frame{fill:var(--bg);stroke:var(--border);}.title{fill:var(--title);}.desc{fill:var(--text);}.lang{fill:var(--text);}.star{fill:var(--star);}.muted{fill:var(--muted);}.barlabel{fill:var(--text);}.barpct{fill:var(--muted);}.v-stars{fill:var(--c-stars);}.v-repos{fill:var(--c-repos);}.v-forks{fill:var(--c-forks);}.v-followers{fill:var(--c-followers);}.v-following{fill:var(--c-following);}.icon{fill:var(--text);stroke:var(--text);}</style>
+<rect class="frame" width="460" height="192" rx="6"/>
+<text class="title" x="20" y="32" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="16" font-weight="700">Dainsleif233 on GitHub</text>
+<text class="desc" x="20" y="64" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13">Total Stars</text>
+<text class="v-stars" x="440" y="64" text-anchor="end" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="600">30</text>
+<text class="desc" x="20" y="88" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13">Total Repos</text>
+<text class="v-repos" x="440" y="88" text-anchor="end" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="600">69</text>
+<text class="desc" x="20" y="112" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13">Total Forks</text>
+<text class="v-forks" x="440" y="112" text-anchor="end" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="600">5</text>
+<text class="desc" x="20" y="136" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13">Followers</text>
+<text class="v-followers" x="440" y="136" text-anchor="end" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="600">2</text>
+<text class="desc" x="20" y="160" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13">Following</text>
+<text class="v-following" x="440" y="160" text-anchor="end" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="600">5</text>
 </svg>
