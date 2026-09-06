@@ -9,7 +9,7 @@
   <!-- 社交 -->
   <p>
     <a href="https://syshub.top"><img src="https://img.shields.io/badge/🌐-syshub.top-7C3AED?style=for-the-badge" alt="website" /></a>
-    <img src="https://img.shields.io/badge/📍-Jiangsu%20University,%20China-0EA5E9?style=for-the-badge" alt="location" />
+    <img src="https://img.shields.io/badge/🏫-Jiangsu%20University,%20China-0EA5E9?style=for-the-badge" alt="school" />
   </p>
 </div>
 
@@ -45,23 +45,3 @@
 <div align="center">
   <sub>「先走一步。」</sub>
 </div>
-
-<!--
-====================================================================
-  🚀 自部署升级（想恢复炫酷统计卡片 / pin 卡片 / 语言占比图）
-====================================================================
-公共实例 github-readme-stats.vercel.app 被全球用户共享，GitHub API
-速率限制经常耗尽 → 图片 429 不显示。自己部署一份就完全不受影响：
-
-1. Fork https://github.com/anuraghazra/github-readme-stats
-2. 去 https://vercel.com → New Project → 导入 fork 的仓库 → Deploy
-3. 生成 GitHub Personal Access Token（classic）：
-   https://github.com/settings/tokens  勾选 public_repo，复制 token
-4. Vercel 项目 → Settings → Environment Variables 加：
-   PAT_1 = <你的 token>   保存后 Redeploy
-5. 拿到域名（如 https://github-readme-stats-xxxx.vercel.app），
-   把上面注释里的 https://你的域名/api... 替换后取消注释即可
-
-打字机动画同理，https://github.com/DenverCoder1/readme-typing-svg
-点 "Deploy to Vercel" 自部署，彻底告别 demolab 偶发抽风。
--->
