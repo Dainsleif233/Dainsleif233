@@ -9,7 +9,6 @@
   <!-- 社交 -->
   <p>
     <a href="https://syshub.top"><img src="https://img.shields.io/badge/🌐-syshub.top-7C3AED?style=for-the-badge" alt="website" /></a>
-    <a href="https://github.com/Dainsleif233"><img src="https://img.shields.io/badge/💻-GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="github" /></a>
     <img src="https://img.shields.io/badge/📍-Jiangsu%20University,%20China-0EA5E9?style=for-the-badge" alt="location" />
   </p>
 </div>
