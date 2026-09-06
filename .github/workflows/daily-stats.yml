@@ -1,0 +1,63 @@
+name: Daily Stats Refresh
+
+# 每天自动刷新：蛇形贡献图 / 仓库 pin 卡片 / stats / top-langs / 总 star(含 fork)
+on:
+  schedule:
+    - cron: '17 16 * * *'   # 每天 UTC 16:17（北京时间次日 00:17）
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/daily-stats.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  # ─────────────────────────────────────────────
+  # 1. 蛇形贡献图 → 推送到 output 分支
+  # ─────────────────────────────────────────────
+  snake:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: Platane/snk@v3
+        id: snake
+        with:
+          github_user_name: Dainsleif233
+          outputs: |
+            dist/github-contribution-grid-snake.svg
+            dist/github-contribution-grid-snake-dark.svg
+      - uses: crazy-max/ghaction-github-pages@v4
+        with:
+          target_branch: output
+          build_dir: dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # ─────────────────────────────────────────────
+  # 2. stats / top-langs / pin 卡片 / 总 star → 提交到 main
+  # ─────────────────────────────────────────────
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Build assets & update stars
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_USERNAME: Dainsleif233
+        run: python .github/scripts/build_assets.py
+      - name: Commit & push
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets README.md
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "chore: daily stats & pin refresh"
+            git push
+          fi
