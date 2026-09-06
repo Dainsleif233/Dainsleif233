@@ -2,16 +2,15 @@
 """
 由 GitHub Actions 每天调用，纯本地生成所有 README 图片（不依赖任何外部渲染服务）：
 
-  1. 统计总 star（含 fork），更新 README 里的 Total Stars 徽章
-  2. 生成 stats 卡片    -> assets/stats.svg
-  3. 生成 top-langs 卡片-> assets/top-langs.svg
+  1. 生成 stats 卡片    -> assets/stats.svg
+  2. 生成 top-langs 卡片-> assets/top-langs.svg
 
 所有卡片内置 @media (prefers-color-scheme) 主题：浅色/深色自动切换。
+（蛇形图由 Platane/snk 单独生成；总 star/repos/followers 等信息已包含在 stats 卡片中。）
 只用 GitHub REST API（Actions 自带 GITHUB_TOKEN），无任何第三方 429 风险。
 """
 import json
 import os
-import re
 import sys
 import time
 import urllib.request
@@ -166,18 +165,6 @@ def write_file(path, content):
         f.write(content)
 
 
-def update_readme_stars(stars):
-    with open("README.md", "r", encoding="utf-8") as f:
-        txt = f.read()
-    new = re.sub(r"(Total%20Stars-)\d+(-F59E0B)", rf"\g<1>{stars}\g<2>", txt)
-    if new == txt:
-        print("README: Total Stars already up to date.")
-        return
-    with open("README.md", "w", encoding="utf-8") as f:
-        f.write(new)
-    print(f"README: Total Stars -> {stars}")
-
-
 def main():
     user = gh_api(f"/users/{USERNAME}")
     repos = fetch_all_repos()
@@ -198,8 +185,6 @@ def main():
     write_file("assets/stats.svg", stats_card(user, total_stars, total_repos, total_forks))
     write_file("assets/top-langs.svg", top_langs_card(lang_counts))
     print("stats + top-langs written")
-
-    update_readme_stars(total_stars)
 
 
 if __name__ == "__main__":

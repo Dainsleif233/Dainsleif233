@@ -31,12 +31,6 @@
 
 ## 🚀 Something
 
-<p align="center">
-  <img src="https://img.shields.io/github/followers/Dainsleif233?label=Followers&style=for-the-badge&color=7C3AED" />
-  <img src="https://img.shields.io/badge/dynamic/json?query=$.public_repos&url=https://api.github.com/users/Dainsleif233&label=Public%20Repos&style=for-the-badge&color=0EA5E9" />
-  <img src="https://img.shields.io/badge/dynamic/json?query=$.following&url=https://api.github.com/users/Dainsleif233&label=Following&style=for-the-badge&color=10B981" />
-  <img src="https://img.shields.io/badge/Total%20Stars-30-F59E0B?style=for-the-badge" />
-</p>
 
 <p align="center">
   <img src="assets/stats.svg" height="180"/>
