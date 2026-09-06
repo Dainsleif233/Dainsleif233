@@ -9,6 +9,7 @@ on:
     branches: [main]
     paths:
       - '.github/workflows/daily-stats.yml'
+      - '.github/scripts/build_assets.py'
 
 permissions:
   contents: write
@@ -40,6 +41,7 @@ jobs:
   # ─────────────────────────────────────────────
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
