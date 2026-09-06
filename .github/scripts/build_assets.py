@@ -3,9 +3,8 @@
 由 GitHub Actions 每天调用，纯本地生成所有 README 图片（不依赖任何外部渲染服务）：
 
   1. 统计总 star（含 fork），更新 README 里的 Total Stars 徽章
-  2. 生成仓库 pin 卡片  -> assets/pin/<repo>.svg
-  3. 生成 stats 卡片    -> assets/stats.svg
-  4. 生成 top-langs 卡片-> assets/top-langs.svg
+  2. 生成 stats 卡片    -> assets/stats.svg
+  3. 生成 top-langs 卡片-> assets/top-langs.svg
 
 所有卡片内置 @media (prefers-color-scheme) 主题：浅色/深色自动切换。
 只用 GitHub REST API（Actions 自带 GITHUB_TOKEN），无任何第三方 429 风险。
@@ -30,16 +29,6 @@ LANG_COLORS = {
     "C#": "#178600", "Rust": "#dea584", "HTML": "#e34c26", "CSS": "#563d7c",
     "C++": "#f34b7d", "C": "#555555", "Vue": "#41b883", "mcfunction": "#FF6B6B",
 }
-
-# 想换 pin 的仓库，改这里即可（顺序即展示顺序）
-PIN_REPOS = [
-    "MultiJoin",
-    "NakiriElectricity",
-    "ddddGocr",
-    "ddpatch",
-    "JustEnoughSkins",
-    "directlink",
-]
 
 # 浅色为默认，深色通过 @media 覆盖；全部走 CSS 变量
 THEME_STYLE = (
@@ -124,43 +113,6 @@ def wrap_text(s, width):
     return lines
 
 
-def pin_card(repo):
-    name = repo["name"]
-    desc = repo.get("description") or ""
-    lang = repo.get("language") or "Other"
-    stars = repo.get("stargazers_count", 0) or 0
-    forks = repo.get("forks_count", 0) or 0
-    color = LANG_COLORS.get(lang, "#9aa5ce")
-    lines = wrap_text(desc, 54)
-    if len(lines) > 2:
-        lines = lines[:2]
-        lines[1] = lines[1][:50] + "…"
-    W, H = 460, 118
-    ff = 'font-family="Segoe UI,Helvetica,Arial,sans-serif"'
-    p = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">',
-         THEME_STYLE,
-         f'<rect class="frame" width="{W}" height="{H}" rx="6"/>',
-         f'<text class="title" x="20" y="32" {ff} font-size="15" font-weight="600">{escape(name)}</text>']
-    y = 54
-    for ln in lines[:2]:
-        p.append(f'<text class="desc" x="20" y="{y}" {ff} font-size="11.5">{escape(ln)}</text>')
-        y += 16
-    p.append(f'<circle cx="20" cy="96" r="5" fill="{color}"/>')
-    p.append(f'<text class="lang" x="32" y="100" {ff} font-size="11.5">{escape(lang)}</text>')
-    p.append(f'<text class="star" x="300" y="100" {ff} font-size="12">★</text>')
-    p.append(f'<text class="lang" x="312" y="100" {ff} font-size="11.5">{stars}</text>')
-    p.append('<g class="icon" transform="translate(360,89)">')
-    p.append('<circle cx="3" cy="3" r="1.7"/>')
-    p.append('<circle cx="11" cy="3" r="1.7"/>')
-    p.append('<circle cx="7" cy="11" r="1.7"/>')
-    p.append('<path d="M3,4.7 V6.6 Q3,7.4 3.8,7.4 H10.2 Q11,7.4 11,6.6 V4.7" fill="none" stroke-width="1"/>')
-    p.append('<path d="M7,7.4 V9.3" stroke-width="1"/>')
-    p.append('</g>')
-    p.append(f'<text class="lang" x="378" y="100" {ff} font-size="11.5">{forks}</text>')
-    p.append('</svg>')
-    return "\n".join(p)
-
-
 def stats_card(user, total_stars, total_repos, total_forks):
     W, H = 460, 192
     rows = [
@@ -242,15 +194,6 @@ def main():
         lang = r.get("language")
         if lang:
             lang_counts[lang] = lang_counts.get(lang, 0) + 1
-
-    by_name = {r["name"]: r for r in repos}
-
-    for repo in PIN_REPOS:
-        if repo in by_name:
-            write_file(f"assets/pin/{repo}.svg", pin_card(by_name[repo]))
-            print(f"pin: {repo}")
-        else:
-            print(f"pin SKIP (not found): {repo}", file=sys.stderr)
 
     write_file("assets/stats.svg", stats_card(user, total_stars, total_repos, total_forks))
     write_file("assets/top-langs.svg", top_langs_card(lang_counts))

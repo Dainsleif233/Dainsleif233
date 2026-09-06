@@ -43,19 +43,6 @@
   <img src="assets/top-langs.svg" height="180"/>
 </p>
 
-### 📌 Pinned Repositories
-
-<p align="center">
-  <img src="assets/pin/MultiJoin.svg" />
-  <img src="assets/pin/NakiriElectricity.svg" />
-  <br/>
-  <img src="assets/pin/ddddGocr.svg" />
-  <img src="assets/pin/ddpatch.svg" />
-  <br/>
-  <img src="assets/pin/JustEnoughSkins.svg" />
-  <img src="assets/pin/directlink.svg" />
-</p>
-
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="assets/github-contribution-grid-snake-dark.svg" />
