@@ -5,7 +5,7 @@
 <text class="desc" x="20" y="64" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13">Total Stars</text>
 <text class="v-stars" x="440" y="64" text-anchor="end" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="600">30</text>
 <text class="desc" x="20" y="88" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13">Total Repos</text>
-<text class="v-repos" x="440" y="88" text-anchor="end" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="600">69</text>
+<text class="v-repos" x="440" y="88" text-anchor="end" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="600">71</text>
 <text class="desc" x="20" y="112" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13">Total Forks</text>
 <text class="v-forks" x="440" y="112" text-anchor="end" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="600">5</text>
 <text class="desc" x="20" y="136" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13">Followers</text>
