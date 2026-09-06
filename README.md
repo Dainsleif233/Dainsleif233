@@ -18,7 +18,7 @@
 
 ## 🧰 Tech Stack
 
-<p>
+<p align="center">
   <img src="https://img.shields.io/badge/Java-ED8B00?style=flat&logo=openjdk&logoColor=white" />
   <img src="https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white" />
   <img src="https://img.shields.io/badge/PHP-777BB4?style=flat&logo=php&logoColor=white" />
@@ -38,11 +38,7 @@
 </p>
 
 <p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/github-contribution-grid-snake-dark.svg" />
-    <source media="(prefers-color-scheme: light)" srcset="assets/github-contribution-grid-snake.svg" />
-    <img alt="snake animation" src="assets/github-contribution-grid-snake.svg" />
-  </picture>
+  <img alt="snake animation" src="assets/github-contribution-grid-snake.svg" />
 </p>
 
 ---

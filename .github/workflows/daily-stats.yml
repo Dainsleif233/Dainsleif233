@@ -28,7 +28,6 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           outputs: |
             assets/github-contribution-grid-snake.svg?palette=github-light
-            assets/github-contribution-grid-snake-dark.svg?palette=github-dark
       - uses: actions/setup-python@v5
         with:
           python-version: '3.x'

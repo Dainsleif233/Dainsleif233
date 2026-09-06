@@ -4,13 +4,15 @@
 
   1. 生成 stats 卡片    -> assets/stats.svg
   2. 生成 top-langs 卡片-> assets/top-langs.svg
+  3. 给蛇形贡献图注入深色 @media（单文件自适应明暗）
 
 所有卡片内置 @media (prefers-color-scheme) 主题：浅色/深色自动切换。
-（蛇形图由 Platane/snk 单独生成；总 star/repos/followers 等信息已包含在 stats 卡片中。）
+（蛇形图由 Platane/snk 先生成浅色版，本脚本再注入深色覆盖，使其单文件自适应。）
 只用 GitHub REST API（Actions 自带 GITHUB_TOKEN），无任何第三方 429 风险。
 """
 import json
 import os
+import re
 import sys
 import time
 import urllib.request
@@ -61,6 +63,16 @@ THEME_STYLE = (
     ".v-following{fill:var(--c-following);}"
     ".icon{fill:var(--text);stroke:var(--text);}"
     "</style>"
+)
+
+# 蛇形图深色覆盖（对应 snk 的 github-dark 调色板）
+SNAKE_DARK_OVERRIDE = (
+    "@media (prefers-color-scheme: dark){"
+    ":root{"
+    "--ce:#161b22;--c0:#161b22;--c1:#01311f;--c2:#034525;"
+    "--c3:#0f6d31;--c4:#00c647;"
+    "}"
+    "}"
 )
 
 
@@ -165,6 +177,27 @@ def write_file(path, content):
         f.write(content)
 
 
+def patch_snake(path="assets/github-contribution-grid-snake.svg"):
+    """snk 生成的是浅色调色板；向其 <style> 的 :root 后注入深色 @media 覆盖，
+    使单文件在深色模式下自动切换空格/格子颜色。"""
+    if not os.path.exists(path):
+        print(f"snake: {path} not found, skip patch", file=sys.stderr)
+        return
+    with open(path, "r", encoding="utf-8") as f:
+        svg = f.read()
+    if "prefers-color-scheme" in svg:
+        print("snake: already patched")
+        return
+    # 在第一个 :root{...} 规则之后插入深色覆盖
+    svg, n = re.subn(r"(:root\{[^}]*\})", r"\1" + SNAKE_DARK_OVERRIDE, svg, count=1)
+    if n == 0:
+        print("snake: :root rule not found, skip patch", file=sys.stderr)
+        return
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(svg)
+    print("snake: dark @media injected")
+
+
 def main():
     user = gh_api(f"/users/{USERNAME}")
     repos = fetch_all_repos()
@@ -185,6 +218,13 @@ def main():
     write_file("assets/stats.svg", stats_card(user, total_stars, total_repos, total_forks))
     write_file("assets/top-langs.svg", top_langs_card(lang_counts))
     print("stats + top-langs written")
+
+    patch_snake()
+    # 清理旧的深色独立文件（已改为单文件自适应）
+    old_dark = "assets/github-contribution-grid-snake-dark.svg"
+    if os.path.exists(old_dark):
+        os.remove(old_dark)
+        print(f"removed stale {old_dark}")
 
 
 if __name__ == "__main__":
