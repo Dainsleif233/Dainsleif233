@@ -7,6 +7,7 @@
   3. 生成 stats 卡片    -> assets/stats.svg
   4. 生成 top-langs 卡片-> assets/top-langs.svg
 
+所有卡片内置 @media (prefers-color-scheme) 主题：浅色/深色自动切换。
 只用 GitHub REST API（Actions 自带 GITHUB_TOKEN），无任何第三方 429 风险。
 """
 import json
@@ -21,7 +22,7 @@ from xml.sax.saxutils import escape
 USERNAME = os.environ.get("GITHUB_USERNAME", "Dainsleif233")
 TOKEN = os.environ.get("GH_TOKEN") or os.environ.get("GITHUB_TOKEN") or ""
 
-# GitHub linguist 配色（用于语言圆点与柱状图）
+# GitHub linguist 配色（语言圆点/柱状图，两套主题下都保持品牌色）
 LANG_COLORS = {
     "Python": "#3572A5", "JavaScript": "#f1e05a", "TypeScript": "#3178c6",
     "Java": "#b07219", "Go": "#00ADD8", "Kotlin": "#A97BFF",
@@ -39,6 +40,40 @@ PIN_REPOS = [
     "JustEnoughSkins",
     "directlink",
 ]
+
+# 浅色为默认，深色通过 @media 覆盖；全部走 CSS 变量
+THEME_STYLE = (
+    "<style>"
+    ":root{"
+    "--bg:#ffffff;--border:#d0d7de;--title:#0969da;--text:#57606a;"
+    "--muted:#6e7781;--star:#bf8700;"
+    "--c-stars:#bf8700;--c-repos:#0969da;--c-forks:#1a7f37;"
+    "--c-followers:#8250df;--c-following:#0a3069;"
+    "}"
+    "@media (prefers-color-scheme: dark){"
+    ":root{"
+    "--bg:#1a1b27;--border:#292e42;--title:#7aa2f7;--text:#9aa5ce;"
+    "--muted:#565f89;--star:#e0af68;"
+    "--c-stars:#e0af68;--c-repos:#7aa2f7;--c-forks:#9ece6a;"
+    "--c-followers:#bb9af7;--c-following:#7dcfff;"
+    "}"
+    "}"
+    ".frame{fill:var(--bg);stroke:var(--border);}"
+    ".title{fill:var(--title);}"
+    ".desc{fill:var(--text);}"
+    ".lang{fill:var(--text);}"
+    ".star{fill:var(--star);}"
+    ".muted{fill:var(--muted);}"
+    ".barlabel{fill:var(--text);}"
+    ".barpct{fill:var(--muted);}"
+    ".v-stars{fill:var(--c-stars);}"
+    ".v-repos{fill:var(--c-repos);}"
+    ".v-forks{fill:var(--c-forks);}"
+    ".v-followers{fill:var(--c-followers);}"
+    ".v-following{fill:var(--c-following);}"
+    ".icon{fill:var(--text);stroke:var(--text);}"
+    "</style>"
+)
 
 
 def gh_api(path, retries=4):
@@ -101,25 +136,27 @@ def pin_card(repo):
         lines = lines[:2]
         lines[1] = lines[1][:50] + "…"
     W, H = 460, 118
+    ff = 'font-family="Segoe UI,Helvetica,Arial,sans-serif"'
     p = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">',
-         f'<rect width="{W}" height="{H}" rx="6" fill="#1a1b27" stroke="#292e42"/>',
-         f'<text x="20" y="32" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="15" font-weight="600" fill="#7aa2f7">{escape(name)}</text>']
+         THEME_STYLE,
+         f'<rect class="frame" width="{W}" height="{H}" rx="6"/>',
+         f'<text class="title" x="20" y="32" {ff} font-size="15" font-weight="600">{escape(name)}</text>']
     y = 54
     for ln in lines[:2]:
-        p.append(f'<text x="20" y="{y}" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="11.5" fill="#9aa5ce">{escape(ln)}</text>')
+        p.append(f'<text class="desc" x="20" y="{y}" {ff} font-size="11.5">{escape(ln)}</text>')
         y += 16
     p.append(f'<circle cx="20" cy="96" r="5" fill="{color}"/>')
-    p.append(f'<text x="32" y="100" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="11.5" fill="#9aa5ce">{escape(lang)}</text>')
-    p.append(f'<text x="300" y="100" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="12" fill="#e0af68">★</text>')
-    p.append(f'<text x="312" y="100" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="11.5" fill="#9aa5ce">{stars}</text>')
-    p.append('<g transform="translate(360,89)" fill="#9aa5ce">')
+    p.append(f'<text class="lang" x="32" y="100" {ff} font-size="11.5">{escape(lang)}</text>')
+    p.append(f'<text class="star" x="300" y="100" {ff} font-size="12">★</text>')
+    p.append(f'<text class="lang" x="312" y="100" {ff} font-size="11.5">{stars}</text>')
+    p.append('<g class="icon" transform="translate(360,89)">')
     p.append('<circle cx="3" cy="3" r="1.7"/>')
     p.append('<circle cx="11" cy="3" r="1.7"/>')
     p.append('<circle cx="7" cy="11" r="1.7"/>')
-    p.append('<path d="M3,4.7 V6.6 Q3,7.4 3.8,7.4 H10.2 Q11,7.4 11,6.6 V4.7" fill="none" stroke="#9aa5ce" stroke-width="1"/>')
-    p.append('<path d="M7,7.4 V9.3" stroke="#9aa5ce" stroke-width="1"/>')
+    p.append('<path d="M3,4.7 V6.6 Q3,7.4 3.8,7.4 H10.2 Q11,7.4 11,6.6 V4.7" fill="none" stroke-width="1"/>')
+    p.append('<path d="M7,7.4 V9.3" stroke-width="1"/>')
     p.append('</g>')
-    p.append(f'<text x="378" y="100" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="11.5" fill="#9aa5ce">{forks}</text>')
+    p.append(f'<text class="lang" x="378" y="100" {ff} font-size="11.5">{forks}</text>')
     p.append('</svg>')
     return "\n".join(p)
 
@@ -127,19 +164,21 @@ def pin_card(repo):
 def stats_card(user, total_stars, total_repos, total_forks):
     W, H = 460, 192
     rows = [
-        ("Total Stars", total_stars, "#e0af68"),
-        ("Total Repos", total_repos, "#7aa2f7"),
-        ("Total Forks", total_forks, "#9ece6a"),
-        ("Followers", user.get("followers", 0) or 0, "#bb9af7"),
-        ("Following", user.get("following", 0) or 0, "#7dcfff"),
+        ("Total Stars", total_stars, "v-stars"),
+        ("Total Repos", total_repos, "v-repos"),
+        ("Total Forks", total_forks, "v-forks"),
+        ("Followers", user.get("followers", 0) or 0, "v-followers"),
+        ("Following", user.get("following", 0) or 0, "v-following"),
     ]
+    ff = 'font-family="Segoe UI,Helvetica,Arial,sans-serif"'
     p = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">',
-         f'<rect width="{W}" height="{H}" rx="6" fill="#1a1b27" stroke="#292e42"/>',
-         f'<text x="20" y="32" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="16" font-weight="700" fill="#7aa2f7">{escape(USERNAME + " on GitHub")}</text>']
+         THEME_STYLE,
+         f'<rect class="frame" width="{W}" height="{H}" rx="6"/>',
+         f'<text class="title" x="20" y="32" {ff} font-size="16" font-weight="700">{escape(USERNAME + " on GitHub")}</text>']
     y = 64
-    for label, val, color in rows:
-        p.append(f'<text x="20" y="{y}" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" fill="#9aa5ce">{escape(label)}</text>')
-        p.append(f'<text x="440" y="{y}" text-anchor="end" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="{color}">{val}</text>')
+    for label, val, cls in rows:
+        p.append(f'<text class="desc" x="20" y="{y}" {ff} font-size="13">{escape(label)}</text>')
+        p.append(f'<text class="{cls}" x="440" y="{y}" text-anchor="end" {ff} font-size="13" font-weight="600">{val}</text>')
         y += 24
     p.append('</svg>')
     return "\n".join(p)
@@ -151,17 +190,19 @@ def top_langs_card(lang_counts):
     total = sum(c for _, c in items) or 1
     W = 460
     H = 50 + len(items) * 24 + 12
+    ff = 'font-family="Segoe UI,Helvetica,Arial,sans-serif"'
     p = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">',
-         f'<rect width="{W}" height="{H}" rx="6" fill="#1a1b27" stroke="#292e42"/>',
-         f'<text x="20" y="32" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="16" font-weight="700" fill="#7aa2f7">Top Languages</text>']
+         THEME_STYLE,
+         f'<rect class="frame" width="{W}" height="{H}" rx="6"/>',
+         f'<text class="title" x="20" y="32" {ff} font-size="16" font-weight="700">Top Languages</text>']
     y = 52
     bar_x, bar_max = 110, 280
     for lang, c in items:
         pct = c / total
         color = LANG_COLORS.get(lang, "#9aa5ce")
-        p.append(f'<text x="20" y="{y+9}" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="12" fill="#9aa5ce">{escape(lang)}</text>')
+        p.append(f'<text class="barlabel" x="20" y="{y+9}" {ff} font-size="12">{escape(lang)}</text>')
         p.append(f'<rect x="{bar_x}" y="{y}" width="{max(2, int(bar_max*pct))}" height="10" rx="3" fill="{color}"/>')
-        p.append(f'<text x="{bar_x+bar_max+12}" y="{y+9}" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="11" fill="#565f89">{pct*100:.0f}%</text>')
+        p.append(f'<text class="barpct" x="{bar_x+bar_max+12}" y="{y+9}" {ff} font-size="11">{pct*100:.0f}%</text>')
         y += 24
     p.append('</svg>')
     return "\n".join(p)
@@ -194,7 +235,6 @@ def main():
     total_repos = len(repos)
     print(f"repos={total_repos} stars(incl forks)={total_stars} forks(incl forks)={total_forks}")
 
-    # 语言统计（仅统计自己仓库）
     lang_counts = {}
     for r in repos:
         if r.get("fork"):
@@ -205,7 +245,6 @@ def main():
 
     by_name = {r["name"]: r for r in repos}
 
-    # pin 卡片
     for repo in PIN_REPOS:
         if repo in by_name:
             write_file(f"assets/pin/{repo}.svg", pin_card(by_name[repo]))
