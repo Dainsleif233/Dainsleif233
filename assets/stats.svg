@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="460" height="192" viewBox="0 0 460 192">
+<rect width="460" height="192" rx="6" fill="#1a1b27" stroke="#292e42"/>
+<text x="20" y="32" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="16" font-weight="700" fill="#7aa2f7">Dainsleif233 on GitHub</text>
+<text x="20" y="64" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" fill="#9aa5ce">Total Stars</text>
+<text x="440" y="64" text-anchor="end" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#e0af68">30</text>
+<text x="20" y="88" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" fill="#9aa5ce">Total Repos</text>
+<text x="440" y="88" text-anchor="end" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#7aa2f7">69</text>
+<text x="20" y="112" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" fill="#9aa5ce">Total Forks</text>
+<text x="440" y="112" text-anchor="end" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#9ece6a">5</text>
+<text x="20" y="136" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" fill="#9aa5ce">Followers</text>
+<text x="440" y="136" text-anchor="end" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#bb9af7">2</text>
+<text x="20" y="160" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" fill="#9aa5ce">Following</text>
+<text x="440" y="160" text-anchor="end" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#7dcfff">5</text>
+</svg>
