@@ -28,6 +28,16 @@
   <a href="https://www.docker.com"><img src="https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white" /></a>
 </p>
 
+  <!-- 框架 -->
+  <p align="center">
+  <a href="https://papermc.io/software/paper/"><img src="https://img.shields.io/badge/Paper-00B4D8?style=flat" /></a>
+  <a href="https://velocitypowered.com"><img src="https://img.shields.io/badge/Velocity-008EEF?style=flat" /></a>
+  <a href="https://mcdreforged.com/"><img src="https://img.shields.io/badge/MCDReforged-E64A19?style=flat" /></a>
+  <a href="https://github.com/bs-community/blessing-skin-server"><img src="https://img.shields.io/badge/Blessing%20Skin-E91E63?style=flat" /></a>
+  <a href="https://workers.cloudflare.com"><img src="https://img.shields.io/badge/Cloudflare%20Workers-F38020?style=flat&logo=cloudflare&logoColor=white" /></a>
+  <a href="https://nextjs.org"><img src="https://img.shields.io/badge/Next.js-000000?style=flat&logo=next.js&logoColor=white" /></a>
+  </p>
+
 ## 🚀 Something
 
 
